@@ -1,0 +1,30 @@
+name: crt-scan
+on:
+  schedule:
+    - cron: "5 * * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: crt-scan
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python bot.py
+        env:
+          TD_KEY: ${{ secrets.TD_KEY }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT: ${{ secrets.TG_CHAT }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+      - name: save state
+        run: |
+          git config user.name "crt-bot"
+          git config user.email "crt-bot@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || (git commit -m "update state" && git push)
