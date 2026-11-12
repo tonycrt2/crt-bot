@@ -17,7 +17,7 @@ import requests
 # ================== SETTINGS ==================
 # "fx" = candle day starts 17:00 New York. "crypto" = candle day starts 00:00 UTC.
 INSTRUMENTS = {
-    "XAU/USD": "fx", "XAG/USD": "fx", "BTC/USD": "crypto",
+    "XAU/USD": "fx", "BTC/USD": "crypto",
     "EUR/USD": "fx", "GBP/USD": "fx", "USD/JPY": "fx",
     "AUD/USD": "fx", "USD/CAD": "fx", "AUD/JPY": "fx",
 }
